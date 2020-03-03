@@ -14,6 +14,7 @@ function showHelp {
     echo    "    -r / --red   [value]  Set the red pixel on (1) or off (0)."
     echo    "    -g / --green [value]  Set the green pixel on (1) or off (0)."
     echo    "    -b / --blue  [value]  Set the blue pixel on (1) or off (0)."
+    echo    "    -o / --off            Turn all the pixels off (eg. clear notifications)."
     echo    "    -h / --help           This help screen."
     echo
 }
@@ -55,6 +56,9 @@ for arg in "$@"; do
         esac
         argIsAValue=0
     else
+        # Make the argument lowercase
+        arg=${arg,,}
+
         if [[ $arg = "-r" || $arg = "--red" ]]; then
             argIsAValue=1
         elif [[ $arg = "-g" || $arg = "--green" ]]; then
@@ -66,13 +70,19 @@ for arg in "$@"; do
         elif [[ $arg = "-h" || $arg = "--help" ]]; then
             showHelp
             exit 0
+        elif [[ $arg = "-o" || $arg = "--off" ]]; then
+            echo "0.0.0.0." > "$statusfile"
+            exit 0
+        else
+            echo "[ERROR] Unknown switch: $arg"
+            exit 1
         fi
     fi
 
     ((argCount++))
 
     if [[ "$argCount" -eq $# && "$argIsAValue" -ne 0 ]]; then
-        echo "Error:  Missing value for $arg"
+        echo "[Error] Missing value for $arg"
         exit 1
     fi
 done
