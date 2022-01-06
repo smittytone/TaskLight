@@ -1,6 +1,6 @@
 # TaskLight #
 
-For details, please see [this blog post](). *coming soon*
+For details, please see [this blog post](https://blog.smittytone.net/2020/03/07/mac-neopixel-notification/).
 
 ## Code Components ##
 
